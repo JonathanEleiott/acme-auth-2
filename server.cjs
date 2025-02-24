@@ -14,7 +14,9 @@ app.get('/', (req, res, next) => {
 app.post('/api/v1/login', async(req, res, next) => {
   const { username, password } = req.body;
   try {
-    const x = await authenticateUser(username, password);
+    const token = await authenticateUser(username, password);
+    console.log(token);
+    res.send({ token: token });
   } catch(err) {
     next(err);
   }
