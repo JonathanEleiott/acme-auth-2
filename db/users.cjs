@@ -35,11 +35,32 @@ const authenticateUser = async(username, password) => {
       throw new Error('Bad credentials');
     }
   } catch(err) {
-    throw new Error(err);
+    throw new Error('Bad Credentials');
+  }
+}
+
+const logInWithToken = async(token) => {
+  try {
+    const usefulInfo = await jwt.verify(token, process.env.JWT_SECRET);
+
+    const { rows } = await client.query(`
+      SELECT * FROM users WHERE username='${usefulInfo.username}'
+    `);
+
+    const user = rows[0];
+
+    if(user) {
+      return { username: user.username };
+    } else {
+      return { message: 'Bad Token' }
+    }
+  } catch(err) {
+    throw err;
   }
 }
 
 module.exports = {
   createUser,
-  authenticateUser
+  authenticateUser,
+  logInWithToken
 }

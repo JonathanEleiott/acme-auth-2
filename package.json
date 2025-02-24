@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.cjs",
+    "start:dev": "nodemon server.cjs",
+    "seed:dev": "node ./db/seed.cjs"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
